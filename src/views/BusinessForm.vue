@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
+import { api } from '@/api/axios'
+import router from '@/router'
 
 const schema = z.object({
   nama_usaha: z.string('Nama Usaha tidak valid!'),
@@ -24,10 +26,26 @@ const state = reactive<Partial<Schema>>({
 })
 
 const toast = useToast()
+const isLoading = ref(false)
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'success' })
-  console.log(event.data)
+  isLoading.value = true
+
+  try {
+    await api.post('/business-verifications', event.data)
+    toast.add({
+      title: 'Berhasil membuat verifikasi bisnis!',
+      description: 'Form verifikasi bisnis berhasil dibuat',
+      color: 'success',
+    })
+
+    router.push('/business-verification')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    toast.add({ title: 'Terjadi kesalahan!', description: err.response.data.message })
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
 
@@ -41,18 +59,18 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       <UInput v-model="state.nib" />
     </UFormField>
     <UFormField label="NPWP" name="npwp">
-      <UInput v-model="state.nib" />
+      <UInput v-model="state.npwp" />
     </UFormField>
     <UFormField label="Omzet Bulanan" name="omzet_bulanan">
-      <UInput v-model="state.omzet_bulanan" />
+      <UInput v-model="state.omzet_bulanan" type="number" />
     </UFormField>
     <UFormField label="Jumlah Karyawan" name="jumlah_karyawan">
-      <UInput v-model="state.jumlah_karyawan" />
+      <UInput v-model="state.jumlah_karyawan" type="number" />
     </UFormField>
     <UFormField label="Lama Berdiri" name="lama_usaha_tahun">
-      <UInput v-model="state.lama_usaha_tahun" />
+      <UInput v-model="state.lama_usaha_tahun" type="number" />
     </UFormField>
 
-    <UButton type="submit"> Submit </UButton>
+    <UButton type="submit" :disabled="isLoading"> Submit </UButton>
   </UForm>
 </template>

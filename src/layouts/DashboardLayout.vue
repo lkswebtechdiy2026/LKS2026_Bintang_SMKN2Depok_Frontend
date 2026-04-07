@@ -12,6 +12,11 @@ const items: NavigationMenuItem[] = [
     icon: 'i-lucide-house',
     to: '/dashboard',
   },
+  {
+    label: 'Verifikasi Usaha',
+    icon: 'i-lucide-panel-left',
+    to: '/business-verification',
+  },
 ]
 </script>
 
@@ -60,7 +65,6 @@ const items: NavigationMenuItem[] = [
           aria-label="Toggle sidebar"
           @click="open = !open"
         />
-        
       </div>
 
       <div class="flex-1 p-4">
