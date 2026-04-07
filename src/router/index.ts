@@ -10,7 +10,7 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/about',
+      path: '/tentang-kami',
       name: 'about',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -20,9 +20,44 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
+      component: () => import('@/views/LoginPage.vue'),
+    },
+    {
+      path: '/register',
+      name: 'register',
       component: () => import('@/views/RegisterPage.vue'),
     },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('@/views/DashboardView.vue'),
+      meta: { requiresAuth: true, layout: 'dashboard' },
+    },
+    {
+      path: '/business-verification',
+      name: 'business-verification',
+      component: () => import('@/views/BusinessView.vue'),
+      meta: { requiresAuth: true, layout: 'dashboard' },
+    },
+    {
+      path: '/dashboard/new-business',
+      name: 'new-business',
+      component: () => import('@/views/BusinessForm.vue'),
+      meta: { requiresAuth: true, layout: 'dashboard' },
+    },
   ],
+})
+
+router.beforeEach(async (to) => {
+  const isAuthenticated = localStorage.getItem('token')
+
+  if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthenticated) {
+    return '/login'
+  } else if ((to.path === '/login' || to.path === '/register') && isAuthenticated) {
+    return '/dashboard'
+  } else {
+    return true
+  }
 })
 
 export default router

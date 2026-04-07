@@ -2,8 +2,8 @@
   <div class="flex flex-col items-center justify-center gap-4">
     <UPageCard class="w-full max-w-md mt-16">
       <UAuthForm
-        title="Register"
-        description="Silahkan register untuk memulai"
+        title="Login"
+        description="Silahkan login untuk melanjutkan"
         :schema="schema"
         :fields="fields"
         @submit="onSubmit"
@@ -25,13 +25,6 @@ const isLoading = ref(false)
 
 const fields: AuthFormField[] = [
   {
-    name: 'name',
-    type: 'string',
-    label: 'Nama',
-    placeholder: 'Masukan nama anda...',
-    required: true,
-  },
-  {
     name: 'email',
     type: 'email',
     label: 'Email',
@@ -45,20 +38,11 @@ const fields: AuthFormField[] = [
     placeholder: 'Masukan password anda...',
     required: true,
   },
-  {
-    name: 'password_confirmation',
-    type: 'password',
-    label: 'Ulangi Password',
-    placeholder: 'Ulangi password anda...',
-    required: true,
-  },
 ]
 
 const schema = z.object({
-  name: z.string('Nama tidak valid!'),
   email: z.email('Email tidak valid!'),
   password: z.string('Password tidak valid!').min(6, 'Minimal 6 karakter'),
-  password_confirmation: z.string('Password tidak valid!'),
 })
 
 type Schema = z.output<typeof schema>
@@ -67,21 +51,16 @@ const onSubmit = async (payload: FormSubmitEvent<Schema>) => {
   isLoading.value = true
 
   try {
-    const res = await api.post('/auth/register', payload.data)
+    const res = await api.post('/auth/login', payload.data)
     const token = res.data.data.token
     const role = res.data.data.user?.role
 
     localStorage.setItem('token', token)
     localStorage.setItem('role', role)
-
     router.push('/dashboard')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
-    toast.add({
-      title: 'Terjadi kesalahan',
-      description: err.response.data.message,
-      color: 'error',
-    })
+    toast.add({ title: 'Terjadi kesalahan', description: err.response.data.message, color: 'error' })
   } finally {
     isLoading.value = false
   }

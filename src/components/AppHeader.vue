@@ -1,7 +1,21 @@
 <template>
   <UHeader class="primary" mode="slideover">
     <template #title><RouterLink to="/">LKS-WEB-TECH</RouterLink></template>
-    <template #right> <UNavigationMenu :items="navItems" class="hidden lg:flex" /></template>
+    <template #right>
+      <UNavigationMenu :items="navItems" class="hidden lg:flex" />
+      <RouterLink
+        to="/register"
+        v-show="!isAuth"
+        class="border px-3 py-2 rounded-lg hover:bg-primary hover:text-slate-200 transition"
+        >Daftar Sekarang</RouterLink
+      >
+      <RouterLink
+        to="/dashboard"
+        v-show="isAuth"
+        class="border px-3 py-2 rounded-lg hover:bg-primary hover:text-slate-200 transition"
+        >Dashboard</RouterLink
+      >
+    </template>
     <template #body>
       <UNavigationMenu :items="navItems" class="block lg:hidden" orientation="vertical" />
     </template>
@@ -11,6 +25,8 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
 import { ref } from 'vue'
+
+const isAuth = localStorage.getItem('token')
 
 const navItems = ref<NavigationMenuItem[]>([
   {

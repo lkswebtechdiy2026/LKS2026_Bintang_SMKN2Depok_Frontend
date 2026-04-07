@@ -1,11 +1,24 @@
 <script setup lang="ts">
-import AppHeader from './components/AppHeader.vue'
+import { computed } from 'vue'
+import DashboardLayout from './layouts/DashboardLayout.vue'
+import MainLayout from './layouts/MainLayout.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const layout = computed(() => {
+  switch (route.meta.layout) {
+    case 'dashboard':
+      return DashboardLayout
+    default:
+      return MainLayout
+  }
+})
 </script>
 
 <template>
-  <AppHeader />
   <UApp>
-    <RouterView />
+    <component :is="layout" />
   </UApp>
 </template>
 

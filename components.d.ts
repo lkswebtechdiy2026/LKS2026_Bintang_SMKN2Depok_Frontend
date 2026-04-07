@@ -24,10 +24,17 @@ declare module 'vue' {
     UApp: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/App.vue')['default']
     UAuthForm: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/AuthForm.vue')['default']
     UButton: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/Button.vue')['default']
+    UDropdownMenu: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/DropdownMenu.vue')['default']
+    UForm: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/Form.vue')['default']
+    UFormField: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/FormField.vue')['default']
     UHeader: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/Header.vue')['default']
+    UIcon: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/vue/components/Icon.vue')['default']
+    UInput: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/Input.vue')['default']
+    UMain: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/Main.vue')['default']
     UNavigationMenu: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/NavigationMenu.vue')['default']
     UPageCard: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/PageCard.vue')['default']
     UPageHero: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/PageHero.vue')['default']
+    USidebar: typeof import('./node_modules/.pnpm/@nuxt+ui@4.6.1_@tiptap+exte_44a045a0e0946ff2a3483f5d9453393f/node_modules/@nuxt/ui/dist/runtime/components/Sidebar.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }
