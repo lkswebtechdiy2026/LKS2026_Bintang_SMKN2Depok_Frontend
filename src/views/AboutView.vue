@@ -1,7 +1,11 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <template>
+    <UPageSection
+      title="Kami Telah Terpercaya"
+      description="Mulai modal usaha umkm kecil dengan pinjaman kami"
+    />
+    Tentang kami
+  </template>
 </template>
 
 <style></style>

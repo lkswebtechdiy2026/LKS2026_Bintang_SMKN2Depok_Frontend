@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { api } from '@/api/axios'
@@ -32,14 +32,17 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   isLoading.value = true
 
   try {
-    await api.post('/business-verifications', event.data)
+    const res = await api.post('/business-verifications', event.data)
+    const businessId = res.data.data.id
+
+    localStorage.setItem('businessId', businessId)
     toast.add({
       title: 'Berhasil membuat verifikasi bisnis!',
       description: 'Form verifikasi bisnis berhasil dibuat',
       color: 'success',
     })
 
-    router.push('/business-verification')
+    router.push(`/dashboard/business${businessId}`)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     toast.add({ title: 'Terjadi kesalahan!', description: err.response.data.message })
@@ -47,30 +50,43 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     isLoading.value = false
   }
 }
+onMounted(() => {
+  if (localStorage.getItem('businessId')) {
+    router.push('/dashboard/business')
+  }
+})
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
-    <UFormField label="Nama Usaha" name="nama_usaha">
-      <UInput v-model="state.nama_usaha" />
-    </UFormField>
+  <UCard class="flex justify-center items-center w-full">
+    <h1 class="font-semibold font-sans text-xl pb-4 pt-8">Form Pengajuan Usaha</h1>
+    <UForm
+      :schema="schema"
+      :state="state"
+      class="space-y-4 grid grid-cols-2 gap-4"
+      @submit="onSubmit"
+    >
+      <UFormField label="Nama Usaha" name="nama_usaha">
+        <UInput v-model="state.nama_usaha" />
+      </UFormField>
 
-    <UFormField label="NIB" name="nib">
-      <UInput v-model="state.nib" />
-    </UFormField>
-    <UFormField label="NPWP" name="npwp">
-      <UInput v-model="state.npwp" />
-    </UFormField>
-    <UFormField label="Omzet Bulanan" name="omzet_bulanan">
-      <UInput v-model="state.omzet_bulanan" type="number" />
-    </UFormField>
-    <UFormField label="Jumlah Karyawan" name="jumlah_karyawan">
-      <UInput v-model="state.jumlah_karyawan" type="number" />
-    </UFormField>
-    <UFormField label="Lama Berdiri" name="lama_usaha_tahun">
-      <UInput v-model="state.lama_usaha_tahun" type="number" />
-    </UFormField>
+      <UFormField label="NIB" name="nib">
+        <UInput v-model="state.nib" />
+      </UFormField>
+      <UFormField label="NPWP" name="npwp">
+        <UInput v-model="state.npwp" />
+      </UFormField>
+      <UFormField label="Omzet Bulanan" name="omzet_bulanan">
+        <UInput v-model="state.omzet_bulanan" type="number" />
+      </UFormField>
+      <UFormField label="Jumlah Karyawan" name="jumlah_karyawan">
+        <UInput v-model="state.jumlah_karyawan" type="number" />
+      </UFormField>
+      <UFormField label="Lama Berdiri" name="lama_usaha_tahun">
+        <UInput v-model="state.lama_usaha_tahun" type="number" />
+      </UFormField>
 
-    <UButton type="submit" :disabled="isLoading"> Submit </UButton>
-  </UForm>
+      <UButton type="submit" :disabled="isLoading" class="max-w-16"> Submit </UButton>
+    </UForm>
+  </UCard>
 </template>

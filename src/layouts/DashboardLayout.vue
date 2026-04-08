@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { NavigationMenuItem, SidebarProps } from '@nuxt/ui'
+import { api } from '@/api/axios'
+import router from '@/router'
 
 defineProps<Pick<SidebarProps, 'variant' | 'collapsible' | 'side'>>()
 
 const open = ref(true)
+const businessId = localStorage.getItem('businessId')
 
 const items: NavigationMenuItem[] = [
   {
@@ -14,10 +17,21 @@ const items: NavigationMenuItem[] = [
   },
   {
     label: 'Verifikasi Usaha',
-    icon: 'i-lucide-panel-left',
-    to: '/business-verification',
+    icon: 'i-lucide-file',
+    to: `/dashboard/business/${businessId}`,
+  },
+  {
+    label: 'Cicilan',
+    icon: 'i-lucide-banknote-arrow-up',
+    to: `/dashboard/financing-application`,
   },
 ]
+
+const logout = async () => {
+  await api.post('/auth/logout')
+  localStorage.clear()
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -65,6 +79,8 @@ const items: NavigationMenuItem[] = [
           aria-label="Toggle sidebar"
           @click="open = !open"
         />
+
+        <UButton label="Signout" @click="logout" />
       </div>
 
       <div class="flex-1 p-4">

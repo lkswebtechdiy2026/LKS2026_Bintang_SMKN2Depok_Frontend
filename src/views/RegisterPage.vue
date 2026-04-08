@@ -74,7 +74,7 @@ const onSubmit = async (payload: FormSubmitEvent<Schema>) => {
     localStorage.setItem('token', token)
     localStorage.setItem('role', role)
 
-    router.push('/dashboard')
+    router.push('/dashboard/new-business')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     toast.add({

@@ -11,7 +11,7 @@ const router = createRouter({
     },
     {
       path: '/tentang-kami',
-      name: 'about',
+      name: 'tentang-kami',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -34,15 +34,27 @@ const router = createRouter({
       meta: { requiresAuth: true, layout: 'dashboard' },
     },
     {
-      path: '/business-verification',
-      name: 'business-verification',
+      path: '/dashboard/business/:id',
+      name: 'business',
       component: () => import('@/views/BusinessView.vue'),
+      meta: { requiresAuth: true, layout: 'dashboard' },
+    },
+    {
+      path: '/dashboard/business-verification',
+      name: 'business-verification',
+      component: () => import('@/views/BusinessList.vue'),
       meta: { requiresAuth: true, layout: 'dashboard' },
     },
     {
       path: '/dashboard/new-business',
       name: 'new-business',
       component: () => import('@/views/BusinessForm.vue'),
+      meta: { requiresAuth: true, layout: 'dashboard' },
+    },
+    {
+      path: '/dashboard/new-financing',
+      name: 'new-business',
+      component: () => import('@/views/FinancingForm.vue'),
       meta: { requiresAuth: true, layout: 'dashboard' },
     },
   ],
